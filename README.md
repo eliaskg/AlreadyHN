@@ -4,6 +4,8 @@ AlreadyHN
 AlreandyHN is a bookmarklet written in JavaScript that checks the current page's address against [hnsearch.com](http://www.hnsearch.com) to see if it was already posted on Hacker News.
 Depending on the result it let's you view the comments or redirects you to the new submission page.
 
+![Screenshot](http://i.imgur.com/NTiIq.png)
+
 
 Installation
 --------
