@@ -34,14 +34,21 @@
         var url = window.location.href;
         var commentsUrl;
         
-        // --- Fire up the search request
-        jQuery.ajax({
-            url:"http://api.thriftdb.com/api.hnsearch.com/items/_search?filter%5Bfields%5D%5Btype%5D=submission&q=" + url,
-            dataType:"jsonp",
-            jsonp:"callback",
-            jsonpCallback:"callback",
-            success:checkResults
-        });
+		// --- Check if on Hacker News already
+		if (url.indexOf("news.ycombinator.com") !== -1) {
+			// --- Remove the search indicator
+            searchView && $(searchView).remove();
+			onHN();
+		} else {
+			// --- Fire up the search request
+			jQuery.ajax({
+				url:"http://api.thriftdb.com/api.hnsearch.com/items/_search?filter%5Bfields%5D%5Btype%5D=submission&q=" + url,
+				dataType:"jsonp",
+				jsonp:"callback",
+				jsonpCallback:"callback",
+				success:checkResults
+			});
+		}
 
         function checkResults(object) {
             var results = object.results;
@@ -92,6 +99,15 @@
             
             if (dialog) {
                 commentsUrl = "http://news.ycombinator.com/item?id=" + item.id;
+                window.location = commentsUrl;
+            }
+        }
+
+        function onHN() {
+            var dialog = confirm("You are ON Hacker News already.\nDo you want to go to the homepage?");
+            
+            if (dialog) {
+                commentsUrl = "http://news.ycombinator.com/news";
                 window.location = commentsUrl;
             }
         }
